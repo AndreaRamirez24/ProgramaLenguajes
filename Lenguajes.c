@@ -12,8 +12,10 @@ Nombre del archivo: Lenguajes*/
 
 // Define nuestros parametros
 typedef struct {
-    char stack[STACK_SIZE]; // Tamaño de la pila
-    int top; // Indice de nuestro inicio
+    // Tamaño de la pila
+    char stack[STACK_SIZE]; 
+    // Indice de nuestro inicio
+    int top; 
 } Stack;
 
 // Funciones para la pila
@@ -38,17 +40,20 @@ char pop(Stack *s) {
     if (!esVacio(s)) {
         return s->stack[s->top--];
     }
-    return '\0'; // Retornar un carácter nulo si la pila está vacía
+    // Retornar un carácter nulo si la pila está vacía
+    return '\0'; 
 }
 
 // Función para imprimir el proceso de la pila
 void printPila(Stack *s) {
-    if (esVacio(s)) { // Para imprimir un espacio vacio
+    // Para imprimir un espacio vacio
+    if (esVacio(s)) { 
         printf("Pila: (vacía)\n");
         return;
     }
     printf("Pila: ");
-    for (int i = 0; i <= s->top; i++) { // Imprime es proceso de la Pila
+    // Imprime es proceso de la Pila
+    for (int i = 0; i <= s->top; i++) { 
         printf("%c ", s->stack[i]);
     }
     printf("\n");
@@ -58,43 +63,54 @@ void printPila(Stack *s) {
 void transicion(char *estadoActual, char cadena, Stack *stack) {
     printf("Estado actual: %c, Entrada: %c\n", *estadoActual, cadena);
     
-    if (*estadoActual == '2') { // Estado q2
-        if (cadena == 'a') { // Si la cadena es a, se apila A
+    // Estado q2
+    if (*estadoActual == '2') { 
+        // Si la cadena es a, se apila A
+        if (cadena == 'a') { 
             push(stack, 'A');
-        } else if (cadena == 'e') { // Si tenemos epsilon, se desapila
+            // Si tenemos epsilon, se desapila
+        } else if (cadena == 'e') { 
             if (!esVacio(stack)) {
                 pop(stack);
             }
         }
-    } else if (*estadoActual == '1') { // Estado q1
-        if (cadena == 'e') { // Si la cadena es e, desapila
+        // Estado q1
+    } else if (*estadoActual == '1') { 
+        // Si la cadena es e, desapila
+        if (cadena == 'e') { 
             if (!esVacio(stack)) {
                 pop(stack); 
             }
         }
-    } else if (*estadoActual == '3') { // Estado q3
+        // Estado q3
+    } else if (*estadoActual == '3') { 
         if (cadena == 'a') {
-            if (!esVacio(stack)) { // Si es vacio, se desapila y se apila B
+            // Si es vacio, se desapila y se apila B
+            if (!esVacio(stack)) { 
                 pop(stack);
                 push(stack, 'B');
             }
         }
     }
 
-    printPila(stack); // Imprimir el estado de la pila después de la transición
+// Imprimir el estado de la pila después de la transición
+    printPila(stack); 
 }
 
 // Función principal para validar la cadena
 int validaCadena(const char *cadena) {
     Stack stack;
     inicioStack(&stack);
-    char estadoActual = '2'; // Estado inicial
-    char cadenaFinal[101];  // Asegurarse de que hay espacio para el '\0'
+    // Estado inicial
+    char estadoActual = '2'; 
+    // Asegurarse de que hay espacio para el '\0'
+    char cadenaFinal[101];  
 
     // Concatenar el fin de cadena
     snprintf(cadenaFinal, sizeof(cadenaFinal), "%s#", cadena);
 
-    for (size_t i = 0; i < strlen(cadenaFinal); i++) { // Usamos size_t para seguir un indice
+// Usamos size_t para seguir un indice
+    for (size_t i = 0; i < strlen(cadenaFinal); i++) { 
         char c = cadenaFinal[i]; 
 
         // Uso de transiciones
@@ -102,7 +118,8 @@ int validaCadena(const char *cadena) {
         
         // Cambio de estados
         if (esVacio(&stack) && estadoActual == '2') {
-            estadoActual = '3'; // Transición a q3 si la pila está vacía
+            // Transición a q3 si la pila está vacía
+            estadoActual = '3'; 
         }
     }
 
@@ -114,7 +131,8 @@ int main() {
     char cadena[100];
 
     printf("Ingresa una cadena (solo 'a' y 'e'): ");
-    scanf("%99s", cadena); // Limitar la entrada para evitar desbordamiento
+    // Limitar la entrada para evitar desbordamiento
+    scanf("%99s", cadena); 
 
     if (validaCadena(cadena)) {
         printf("La cadena es válida.\n");
