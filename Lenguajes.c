@@ -1,3 +1,9 @@
+/*
+Alumno: Ramirez Gonzalez Andrea
+Fecha de entrega: 30/Octubre/2024
+Fecha de actualizacion: 30/Octubre/2024
+Nombre del archivo: Lenguajes*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
